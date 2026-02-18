@@ -1,29 +1,34 @@
 import csv
+import os
 from dataclasses import dataclass
-from typing import List, Set
+from typing import List, Tuple
 
-@dataclass
+def _get_project_root():
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    return os.path.dirname(current_dir)
+
+@dataclass(frozen=True)
 class Rule:
-    premises: List[str]   # lista di nomi di sintomi (classi)
-    conclusion: str       # nome del guasto (classe)
+    premises: Tuple[str, ...]  #lista di nomi di sintomi (classi)
+    conclusion: str            #nome del guasto (classe)
     probability: float
-    successes: int = 0
-    total_uses: int = 0
 
-def load_rules(filepath: str) -> List[Rule]:
+def load_rules(relative_path: str) -> List[Rule]:
+    full_path = os.path.join(_get_project_root(), relative_path)
     rules = []
-    with open(filepath, 'r') as f:
+    with open(full_path, 'r') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            premises = [p.strip() for p in row['premises'].split(',')]
+            premises = tuple(p.strip() for p in row['premises'].split(','))
             conclusion = row['conclusion'].strip()
             prob = float(row['probability'])
             rules.append(Rule(premises, conclusion, prob))
     return rules
 
-def save_rules(filepath: str, rules: List[Rule]):
-    with open(filepath, 'w', newline='') as f:
+def save_rules(relative_path: str, rules: List[Rule]):
+    full_path = os.path.join(_get_project_root(), relative_path)
+    with open(full_path, 'w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerow(['premises', 'conclusion', 'probability', 'successes', 'total_uses'])
+        writer.writerow(['premises', 'conclusion', 'probability'])
         for r in rules:
             writer.writerow([','.join(r.premises), r.conclusion, r.probability])

@@ -2,10 +2,12 @@ import os
 from owlready2 import *
 
 class OntologyManager:
-    def __init__(self, path):
-        # Se il percorso è relativo, costruiscilo assoluto rispetto alla posizione del file?
-        # Per semplicità, assumiamo che path sia già il percorso corretto
-        self.onto = get_ontology(path).load()
+    def __init__(self, relative_path):
+        # Costruisce il percorso assoluto basato sulla posizione di questo file
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(base_dir)  # risale di un livello (da src a root)
+        full_path = os.path.join(project_root, relative_path)
+        self.onto = get_ontology(full_path).load()
     
     def is_valid_class(self, class_name):
         """Verifica se esiste una classe con quel nome nell'ontologia."""

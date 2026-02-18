@@ -46,7 +46,9 @@ def main():
             
             # Aggiornamento probabilità
             if correct is not None:
-                update_probabilities(rules, used_rules, correct, observed)
+                # Dopo il feedback
+                if correct is not None:
+                    rules = update_probabilities(rules, used_rules, correct, observed)
             
             # Induzione: passa l'osservazione
             if correct is not None:
