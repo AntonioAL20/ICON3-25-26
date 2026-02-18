@@ -1,1 +1,3 @@
 
+owlready2
+numpy
