@@ -1,1 +1,5 @@
-
+premises,conclusion,probability
+"FilamentoNonEsce,RumoreStrano","EstrusoreOstruito",0.85
+"PrimoStratoNonAderisce","PiattoNonLivellato",0.9
+"TemperaturaInstabile","Surriscaldamento",0.75
+"RumoreStrano","CavoInterrotto",0.6
