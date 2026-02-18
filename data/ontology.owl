@@ -1,1 +1,115 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://www.example.org/stampante.owl"
+         xmlns="http://www.example.org/stampante.owl#">
 
+<owl:Ontology rdf:about="http://www.example.org/stampante.owl"/>
+
+<owl:ObjectProperty rdf:about="#ha_sintomo">
+  <rdfs:domain rdf:resource="#Guasto"/>
+  <rdfs:range rdf:resource="#Sintomo"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#composto_da">
+  <rdfs:domain rdf:resource="#Componente"/>
+  <rdfs:range rdf:resource="#Componente"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#affligge">
+  <rdfs:domain rdf:resource="#Guasto"/>
+  <rdfs:range rdf:resource="#Componente"/>
+</owl:ObjectProperty>
+
+<owl:Class rdf:about="#Componente">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Estrusore">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Piatto">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Elettronica">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Guasto">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#EstrusoreOstruito">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#PiattoNonLivellato">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Surriscaldamento">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#CavoInterrotto">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Sintomo">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FilamentoNonEsce">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#PrimoStratoNonAderisce">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TemperaturaInstabile">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#RumoreStrano">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#estrusore_principale">
+  <rdf:type rdf:resource="#Estrusore"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#piatto_principale">
+  <rdf:type rdf:resource="#Piatto"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#elettronica_principale">
+  <rdf:type rdf:resource="#Elettronica"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#guasto_estrusore_ostruito">
+  <rdf:type rdf:resource="#EstrusoreOstruito"/>
+  <ha_sintomo rdf:resource="#sintomo_filamento_non_esce"/>
+  <affligge rdf:resource="#estrusore_principale"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#sintomo_filamento_non_esce">
+  <rdf:type rdf:resource="#FilamentoNonEsce"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#guasto_piatto_non_livellato">
+  <rdf:type rdf:resource="#PiattoNonLivellato"/>
+  <ha_sintomo rdf:resource="#sintomo_primo_strato_non_aderisce"/>
+  <affligge rdf:resource="#piatto_principale"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#sintomo_primo_strato_non_aderisce">
+  <rdf:type rdf:resource="#PrimoStratoNonAderisce"/>
+</owl:NamedIndividual>
+
+
+</rdf:RDF>
