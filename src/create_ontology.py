@@ -116,6 +116,112 @@ with onto:
     class StratiDeformati(Sintomo):
         pass
     
+     # --- Display / Interfaccia utente ---
+    class Display(Componente):
+        pass
+    class DisplayGuasto(Guasto):
+        pass
+    class TouchNonRisponde(Guasto):
+        pass
+    class SchermoNero(Sintomo):
+        pass
+    class IconeCongelate(Sintomo):
+        pass
+    class MessaggiIlleggibili(Sintomo):
+        pass
+    
+    # --- Scheda SD / Supporto di memoria ---
+    class SchedaSD(Componente):
+        pass
+    class SchedaNonRilevata(Guasto):
+        pass
+    class FileCorrotti(Guasto):
+        pass
+    class ErroreLetturaSD(Sintomo):
+        pass
+    class StampaNonAvvia(Sintomo):
+        pass
+    class LetturaLenta(Sintomo):
+        pass
+    
+    # --- Cablaggio / Connessioni ---
+    class Cablaggio(Componente):
+        pass
+    class ConnettoreAllentato(Guasto):
+        pass
+    class Cortocircuito(Guasto):
+        pass
+    class SpegnimentoImprovviso(Sintomo):
+        pass
+    class OdoreBruciato(Sintomo):
+        pass
+    class FunzionamentoIntermittente(Sintomo):
+        pass
+    
+    # --- Telaio / Struttura meccanica ---
+    class Telaio(Componente):
+        pass
+    class TelaioDeformato(Guasto):
+        pass
+    class VitiAllentate(Guasto):
+        pass
+    class VibrazioniEccessive(Sintomo):
+        pass
+    class OffsetAssi(Sintomo):
+        pass
+    class RumoreMeccanico(Sintomo):
+        pass
+    
+    # --- Raffreddamento aggiuntivo (elettronica) ---
+    class RaffreddamentoElettronica(Componente):
+        pass
+    class VentolaElettronicaGuasta(Guasto):
+        pass
+    class DissipatoreOstruito(Guasto):
+        pass
+    class SurriscaldamentoDriver(Sintomo):
+        pass
+    class SpegnimentoTermico(Sintomo):
+        pass
+    
+    # --- Sensore di filamento ---
+    class SensoreFilamento(Componente):
+        pass
+    class SensoreFilamentoGuasto(Guasto):
+        pass
+    class SensoreFilamentoFalsoAllarme(Guasto):
+        pass
+    class StampaFerma(Sintomo):
+        pass
+    class AllarmeContinuo(Sintomo):
+        pass
+    
+    # --- Sensore di livello (BLTouch) ---
+    class SensoreLivello(Componente):
+        pass
+    class SondaBloccata(Guasto):
+        pass
+    class SondaNonRileva(Guasto):
+        pass
+    class LivellamentoFallito(Sintomo):
+        pass
+    class PrimoStratoIrregolare(Sintomo):
+        pass
+    
+    # --- Firmware / Software ---
+    class Firmware(Componente):
+        pass
+    class FirmwareCorrotto(Guasto):
+        pass
+    class ParametriErrati(Guasto):
+        pass
+    class ComandiIgnorati(Sintomo):
+        pass
+    class MovimentiAnomali(Sintomo):
+        pass
+    class TemperaturaFissa(Sintomo):
+        pass
+    
     # ========== SINTOMI ==========
     class FilamentoNonEsce(Sintomo):
         pass
