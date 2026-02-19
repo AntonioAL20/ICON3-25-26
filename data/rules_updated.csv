@@ -2,13 +2,13 @@ premises,conclusion,probability
 "FilamentoNonEsce,RumoreStrano",EstrusoreOstruito,0.85
 PrimoStratoNonAderisce,PiattoNonLivellato,0.9
 TemperaturaInstabile,Surriscaldamento,0.75
-RumoreStrano,CavoInterrotto,0.6
+RumoreStrano,CavoInterrotto,0.0
 StampanteNonAccende,AlimentatoreGuasto,0.9
 "RiavviiCasuali,LuciIntermittenti",AlimentatoreInstabile,0.8
 "ErroreTemperatura,TemperaturaNonStabile",SensoreDeragliato,0.85
 ErroreTemperatura,SensoreRotto,0.7
 "StratiSpostati,RumorePasso",PerditaPassi,0.9
-StratiSpostati,MotoreBloccato,0.6
+StratiSpostati,MotoreBloccato,0.0
 HomeFallito,FinecorsaGuasto,0.95
 "HomeFallito,Collisione",FinecorsaFalsoContatto,0.8
 SovratemperaturaEstrusore,VentolaBloccata,0.9
@@ -30,3 +30,6 @@ OffsetAssi,TelaioDeformato,0.6
 "LivellamentoFallito,PrimoStratoIrregolare",SondaBloccata,0.8
 "ComandiIgnorati,MovimentiAnomali",FirmwareCorrotto,0.95
 TemperaturaFissa,ParametriErrati,0.7
+RiavviiCasuali,AlimentatoreInstabile,0.3
+LuciIntermittenti,AlimentatoreInstabile,0.2
+"RumoreStrano,StratiSpostati",VitiAllentate,1.0
