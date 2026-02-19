@@ -195,6 +195,186 @@
   <rdfs:subClassOf rdf:resource="#Sintomo"/>
 </owl:Class>
 
+<owl:Class rdf:about="#Display">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#DisplayGuasto">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TouchNonRisponde">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SchermoNero">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#IconeCongelate">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#MessaggiIlleggibili">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SchedaSD">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SchedaNonRilevata">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FileCorrotti">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ErroreLetturaSD">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#StampaNonAvvia">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#LetturaLenta">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Cablaggio">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ConnettoreAllentato">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Cortocircuito">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SpegnimentoImprovviso">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#OdoreBruciato">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FunzionamentoIntermittente">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Telaio">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TelaioDeformato">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#VitiAllentate">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#VibrazioniEccessive">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#OffsetAssi">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#RumoreMeccanico">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#RaffreddamentoElettronica">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#VentolaElettronicaGuasta">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#DissipatoreOstruito">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SurriscaldamentoDriver">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SpegnimentoTermico">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SensoreFilamento">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SensoreFilamentoGuasto">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SensoreFilamentoFalsoAllarme">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#StampaFerma">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#AllarmeContinuo">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SensoreLivello">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SondaBloccata">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SondaNonRileva">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#LivellamentoFallito">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#PrimoStratoIrregolare">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Firmware">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FirmwareCorrotto">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ParametriErrati">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ComandiIgnorati">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#MovimentiAnomali">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TemperaturaFissa">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
 <owl:Class rdf:about="#FilamentoNonEsce">
   <rdfs:subClassOf rdf:resource="#Sintomo"/>
 </owl:Class>

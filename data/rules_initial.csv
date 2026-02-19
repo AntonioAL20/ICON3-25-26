@@ -17,3 +17,16 @@ premises,conclusion,probability
 "EstrusioneIntermittente","TuboIntasato",0.8
 "PrimoStratoNonAderisce,Warping","PiattoNonRiscalda",0.85
 "TempoRiscaldamentoLungo","PiattoSurriscalda",0.6
+"SchermoNero,IconeCongelate","DisplayGuasto",0.85
+"TouchNonRisponde","TouchNonRisponde",0.9
+"ErroreLetturaSD,StampaNonAvvia","SchedaNonRilevata",0.8
+"FileCorrotti","FileCorrotti",0.75
+"SpegnimentoImprovviso,OdoreBruciato","Cortocircuito",0.95
+"FunzionamentoIntermittente","ConnettoreAllentato",0.7
+"VibrazioniEccessive,RumoreMeccanico","VitiAllentate",0.8
+"OffsetAssi","TelaioDeformato",0.6
+"SurriscaldamentoDriver,SpegnimentoTermico","VentolaElettronicaGuasta",0.85
+"StampaFerma,AllarmeContinuo","SensoreFilamentoFalsoAllarme",0.9
+"LivellamentoFallito,PrimoStratoIrregolare","SondaBloccata",0.8
+"ComandiIgnorati,MovimentiAnomali","FirmwareCorrotto",0.95
+"TemperaturaFissa","ParametriErrati",0.7
