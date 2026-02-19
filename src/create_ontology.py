@@ -1,12 +1,12 @@
 from owlready2 import *
 import os
 
-# Ottieni il percorso base
+#percorso base
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(BASE_DIR)
 ONTOLOGY_PATH = os.path.join(PROJECT_ROOT, "data", "ontology.owl")
 
-# Crea l'ontologia
+# Creazione dell'ontologia
 onto = get_ontology("http://www.example.org/stampante.owl")
 
 with onto:
@@ -240,7 +240,7 @@ with onto:
     class affligge(Guasto >> Componente):
         pass
 
-# Crea la directory se non esiste e salva
+# Creazione della directory se non esiste e salvataggio
 os.makedirs(os.path.join(PROJECT_ROOT, "data"), exist_ok=True)
 onto.save(file = ONTOLOGY_PATH, format = "rdfxml")
 
