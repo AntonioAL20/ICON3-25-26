@@ -3,3 +3,17 @@ premises,conclusion,probability
 "PrimoStratoNonAderisce","PiattoNonLivellato",0.9
 "TemperaturaInstabile","Surriscaldamento",0.75
 "RumoreStrano","CavoInterrotto",0.6
+"StampanteNonAccende","AlimentatoreGuasto",0.9
+"RiavviiCasuali,LuciIntermittenti","AlimentatoreInstabile",0.8
+"ErroreTemperatura,TemperaturaNonStabile","SensoreDeragliato",0.85
+"ErroreTemperatura","SensoreRotto",0.7
+"StratiSpostati,RumorePasso","PerditaPassi",0.9
+"StratiSpostati","MotoreBloccato",0.6
+"HomeFallito","FinecorsaGuasto",0.95
+"HomeFallito,Collisione","FinecorsaFalsoContatto",0.8
+"SovratemperaturaEstrusore","VentolaBloccata",0.9
+"StratiDeformati","VentolaRumorosa",0.5
+"FilamentoSalta,EstrusioneIntermittente","IngranaggioConsumato",0.75
+"EstrusioneIntermittente","TuboIntasato",0.8
+"PrimoStratoNonAderisce,Warping","PiattoNonRiscalda",0.85
+"TempoRiscaldamentoLungo","PiattoSurriscalda",0.6
