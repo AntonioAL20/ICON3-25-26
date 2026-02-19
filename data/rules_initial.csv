@@ -30,3 +30,5 @@ premises,conclusion,probability
 "LivellamentoFallito,PrimoStratoIrregolare","SondaBloccata",0.8
 "ComandiIgnorati,MovimentiAnomali","FirmwareCorrotto",0.95
 "TemperaturaFissa","ParametriErrati",0.7
+"RiavviiCasuali","AlimentatoreInstabile",0.3
+"LuciIntermittenti","AlimentatoreInstabile",0.2
