@@ -4,7 +4,7 @@ import csv
 import random
 import numpy as np
 
-# Aggiungi la directory src al path per garantire che i moduli siano trovati
+# Aggiunga della directory src al path per garantire che i moduli siano trovati
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from knowledge_base import load_rules, Rule
@@ -23,8 +23,7 @@ def load_test_cases(filepath):
     return cases
 
 def evaluate_fold(train_cases, test_cases, initial_rules, inducer_threshold=3):
-    # Copia le regole iniziali per non modificarle tra i fold
-    # Nota: Rule ora ha premesse come tupla, quindi possiamo creare nuove regole con le stesse premesse e conclusione
+    # Rule ha premesse come tupla, quindi è possibile creare nuove regole con le stesse premesse e conclusione
     rules = []
     for r in initial_rules:
         # Ricrea la regola con la stessa probabilità; le statistiche non vengono copiate
@@ -35,14 +34,12 @@ def evaluate_fold(train_cases, test_cases, initial_rules, inducer_threshold=3):
     # Fase di training (apprendimento)
     for symptoms, true_fault in train_cases:
         results, used_rules = diagnose(symptoms, rules)
-        # Nota: update_probabilities restituisce una nuova lista di regole, quindi dobbiamo riassegnare rules
+        #update_probabilities restituisce una nuova lista di regole
         rules = update_probabilities(rules, used_rules, true_fault, symptoms)
         inducer.add_observation(symptoms, true_fault, rules)
     
-    # Alla fine del training, aggiungi le regole indotte
+    #Aggiunta delle regole indotte alla fine del training
     for sym_set, fault, count in inducer.get_candidates():
-        # Aggiungi automaticamente la nuova regola
-        # Nota: sym_set è un set, ma Rule richiede una tupla ordinata
         sym_tuple = tuple(sorted(sym_set))
         new_rule = Rule(sym_tuple, fault, 0.8)  # probabilità iniziale
         rules.append(new_rule)
@@ -59,15 +56,15 @@ def evaluate_fold(train_cases, test_cases, initial_rules, inducer_threshold=3):
             if true_fault is not None:
                 fn += 1
             continue
-        # Prendi il guasto con probabilità massima
+        # Prende il guasto con probabilità massima
         best_guess = max(results.items(), key=lambda x: x[1])[0]
         if best_guess == true_fault:
             tp += 1
         else:
             fp += 1
-            fn += 1  # perché non abbiamo predetto il vero (assumendo che ci sia sempre un guasto vero)
+            fn += 1  # perché non è stato predetto il vero (assumendo che ci sia sempre un guasto vero)
     
-    # Calcola metriche
+    # Calcolo delle metriche
     accuracy = tp / len(test_cases) if test_cases else 0
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0
     recall = tp / (tp + fn) if (tp + fn) > 0 else 0
@@ -103,7 +100,7 @@ def cross_validation(cases, initial_rules, k=5, n_runs=10, inducer_threshold=3):
     }
 
 if __name__ == '__main__':
-    # Determina il percorso assoluto del file dei casi di test
+    #percorso assoluto del file dei casi di test
     base_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(base_dir)
     test_cases_path = os.path.join(project_root, 'data', 'test_cases.csv')
