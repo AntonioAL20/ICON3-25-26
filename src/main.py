@@ -41,14 +41,15 @@ def main():
             print(f"Sintomi non validi: {invalid}. Riprova.")
             continue
 
-        results, used_rules = diagnose(observed, rules, onto_mgr)
-        if not results:
-            print("Nessuna diagnosi possibile.")
-        else:
-            print("\nPossibili guasti:")
-            for guasto, prob in sorted(results.items(), key=lambda x: x[1], reverse=True):
-                print(f"  {guasto}: {prob:.2f}")
-
+            results, used_rules = diagnose(observed, rules, onto_mgr)
+            if not results:
+                print("Nessuna diagnosi possibile.")
+            else:
+                print("\nPossibili guasti:")
+                for guasto, prob in sorted(results.items(), key=lambda x: x[1], reverse=True):
+                    print(f"  {guasto}: {prob:.2f}")
+            
+            # Richiedi feedback sempre (anche se non ci sono diagnosi)
             feedback = input("\nQual era il guasto effettivo? (inserisci nome o 'nessuno'): ").strip()
             if feedback == 'nessuno':
                 correct = None
@@ -58,12 +59,12 @@ def main():
                     correct = None
                 else:
                     correct = feedback
-
-            # Aggiornamento probabilità
-            if correct is not None:
+            
+            # Aggiornamento probabilità (solo se ci sono regole usate e il guasto è valido)
+            if correct is not None and used_rules:
                 rules = update_probabilities(rules, used_rules, correct, observed)
-
-            # Induzione: passa l'osservazione
+            
+            # Induzione: passa l'osservazione (anche se non ci sono regole usate)
             if correct is not None:
                 inducer.add_observation(observed, correct, rules)
 
