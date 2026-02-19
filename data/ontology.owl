@@ -27,28 +27,56 @@
   <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
 </owl:Class>
 
+<owl:Class rdf:about="#Guasto">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Sintomo">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
 <owl:Class rdf:about="#Estrusore">
   <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#IngranaggioConsumato">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TuboIntasato">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FilamentoSalta">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#EstrusioneIntermittente">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
 </owl:Class>
 
 <owl:Class rdf:about="#Piatto">
   <rdfs:subClassOf rdf:resource="#Componente"/>
 </owl:Class>
 
+<owl:Class rdf:about="#PiattoNonRiscalda">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#PiattoSurriscalda">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Warping">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TempoRiscaldamentoLungo">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
 <owl:Class rdf:about="#Elettronica">
   <rdfs:subClassOf rdf:resource="#Componente"/>
-</owl:Class>
-
-<owl:Class rdf:about="#Guasto">
-  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
-</owl:Class>
-
-<owl:Class rdf:about="#EstrusoreOstruito">
-  <rdfs:subClassOf rdf:resource="#Guasto"/>
-</owl:Class>
-
-<owl:Class rdf:about="#PiattoNonLivellato">
-  <rdfs:subClassOf rdf:resource="#Guasto"/>
 </owl:Class>
 
 <owl:Class rdf:about="#Surriscaldamento">
@@ -59,8 +87,112 @@
   <rdfs:subClassOf rdf:resource="#Guasto"/>
 </owl:Class>
 
-<owl:Class rdf:about="#Sintomo">
-  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+<owl:Class rdf:about="#Alimentatore">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#AlimentatoreGuasto">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#AlimentatoreInstabile">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#StampanteNonAccende">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#RiavviiCasuali">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#LuciIntermittenti">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SensoreTemperatura">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SensoreRotto">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SensoreDeragliato">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ErroreTemperatura">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#TemperaturaNonStabile">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#MotorePasso">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#MotoreBloccato">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#PerditaPassi">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#StratiSpostati">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#RumorePasso">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#MovimentoIrregolare">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Finecorsa">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FinecorsaGuasto">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FinecorsaFalsoContatto">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#HomeFallito">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Collisione">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Ventola">
+  <rdfs:subClassOf rdf:resource="#Componente"/>
+</owl:Class>
+
+<owl:Class rdf:about="#VentolaBloccata">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#VentolaRumorosa">
+  <rdfs:subClassOf rdf:resource="#Guasto"/>
+</owl:Class>
+
+<owl:Class rdf:about="#SovratemperaturaEstrusore">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
+</owl:Class>
+
+<owl:Class rdf:about="#StratiDeformati">
+  <rdfs:subClassOf rdf:resource="#Sintomo"/>
 </owl:Class>
 
 <owl:Class rdf:about="#FilamentoNonEsce">
@@ -78,38 +210,6 @@
 <owl:Class rdf:about="#RumoreStrano">
   <rdfs:subClassOf rdf:resource="#Sintomo"/>
 </owl:Class>
-
-<owl:NamedIndividual rdf:about="#estrusore_principale">
-  <rdf:type rdf:resource="#Estrusore"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#piatto_principale">
-  <rdf:type rdf:resource="#Piatto"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#elettronica_principale">
-  <rdf:type rdf:resource="#Elettronica"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#guasto_estrusore_ostruito">
-  <rdf:type rdf:resource="#EstrusoreOstruito"/>
-  <ha_sintomo rdf:resource="#sintomo_filamento_non_esce"/>
-  <affligge rdf:resource="#estrusore_principale"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#sintomo_filamento_non_esce">
-  <rdf:type rdf:resource="#FilamentoNonEsce"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#guasto_piatto_non_livellato">
-  <rdf:type rdf:resource="#PiattoNonLivellato"/>
-  <ha_sintomo rdf:resource="#sintomo_primo_strato_non_aderisce"/>
-  <affligge rdf:resource="#piatto_principale"/>
-</owl:NamedIndividual>
-
-<owl:NamedIndividual rdf:about="#sintomo_primo_strato_non_aderisce">
-  <rdf:type rdf:resource="#PrimoStratoNonAderisce"/>
-</owl:NamedIndividual>
 
 
 </rdf:RDF>
