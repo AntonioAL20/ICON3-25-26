@@ -14,7 +14,6 @@ from ontoBK_learning import SemanticFeatureExtractor
 warnings.filterwarnings('ignore')
 
 def load_and_augment_data():
-    """Legge il CSV base e lo espande per avere varianza statistica per il test."""
     base_dir = os.path.dirname(os.path.abspath(__file__))
     csv_path = os.path.join(base_dir, "..", "data", "dataset_guasti.csv")
     
@@ -22,10 +21,14 @@ def load_and_augment_data():
         raise FileNotFoundError(f"File non trovato: {csv_path}")
         
     df = pd.read_csv(csv_path)
-    # Moltiplichiamo il dataset aggiungendo leggero rumore/varianza per simulare un dataset corposo
-    df_ampliato = pd.concat([df]*20, ignore_index=True)
-    df_ampliato = df_ampliato.sample(frac=1, random_state=42).reset_index(drop=True)
-    return df_ampliato
+    
+    # Se il dataset è piccolissimo (vecchia versione), lo moltiplichiamo.
+    # Altrimenti (nuova versione da 1000 righe), lo lasciamo così!
+    if len(df) < 50:
+        df = pd.concat([df]*20, ignore_index=True)
+        
+    df = df.sample(frac=1, random_state=42).reset_index(drop=True)
+    return df
 
 def evaluate_ml_model(X, y):
     """Valutazione rigorosa con K-Fold come richiesto dalle specifiche."""
@@ -53,21 +56,15 @@ def evaluate_ml_model(X, y):
     print("="*60)
 
 def interactive_diagnostic_shell(model, extractor, X_dataset, y_dataset):
-    """
-    Shell interattiva che implementa l'Apprendimento Online (Feedback loop).
-    Simula l'interfaccia utente del KBS con addestramento in tempo reale.
-    """
     print("\n" + "*"*65)
     print(" MODALITA' DIAGNOSTICA INTERATTIVA E APPRENDIMENTO ATTIVATI")
     print(" (Digita 'esci' per terminare il programma)")
     print("*"*65)
     
-    # Elenchiamo in modo chiaro i sintomi testuali esatti attesi
-    sintomi_validi = ["TempTroppoAlta", "TicchettioEstrusore", "FilamentoNonEsce", 
-                      "PiattoFreddo", "VibrazioneAnomala", "OdoreBruciato"]
-    print(f"Sintomi supportati (usa ESATTAMENTE questi nomi):\n{', '.join(sintomi_validi)}\n")
+    # DINAMICO: Peschiamo la lista direttamente da ciò che ha letto l'estrattore!
+    sintomi_validi = extractor.raw_features
+    print(f"Sintomi supportati dall'Ontologia:\n{', '.join(sintomi_validi)}\n")
     
-    # Convertiamo i dataset numpy in liste per poter fare append dinamicamente
     X_list = X_dataset.tolist()
     y_list = y_dataset.tolist()
     
@@ -81,45 +78,33 @@ def interactive_diagnostic_shell(model, extractor, X_dataset, y_dataset):
         if not user_input:
             continue
             
-        # Pulisci input
         symptoms = [s.strip() for s in user_input.split(',')]
-        
-        # 1. ESTENSIONI SEMANTICHE (Il reasoner deduce nuove classi in background)
         features = extractor.extract_features(symptoms)
         
-        # Controllo anti-errore di battitura
         if sum(features) == 0:
-            print(" [!] Nessun sintomo riconosciuto. Assicurati di usare i nomi esatti dalla lista sopra.")
+            print(" [!] Nessun sintomo riconosciuto. Assicurati di usare i nomi esatti.")
             continue
         
-        # 2. PREDIZIONE ML (La RandomForest valuta i sintomi raw + le deduzioni semantiche)
         prediction = model.predict([features])[0]
         probabilities = model.predict_proba([features])[0]
         classes = model.classes_
         
         print("\n ---> DIAGNOSI DEL SISTEMA: ", prediction)
-        print("      Dettaglio probabilità (basate sull'esperienza appresa):")
+        print("      Dettaglio probabilità:")
         
-        # Stampa le probabilità ordinate
         prob_dict = {cls: prob for cls, prob in zip(classes, probabilities) if prob > 0}
         for cls, prob in sorted(prob_dict.items(), key=lambda item: item[1], reverse=True):
             print(f"       - {cls}: {prob*100:.1f}%")
 
-        # 3. APPRENDIMENTO ONLINE (Il Feedback dell'utente)
         print("\n--- Fase di Apprendimento ---")
         feedback = input("Qual era il guasto effettivo? (es. GuastoElettrico, o premi Invio per saltare): ").strip()
         
         if feedback:
-            print(" [Apprendimento] Aggiornamento del modello con la nuova esperienza...")
-            
-            # Aggiungiamo la nuova esperienza (feature + guasto reale) al nostro dataset in memoria
+            print(" [Apprendimento] Aggiornamento del modello...")
             X_list.append(features)
             y_list.append(feedback)
-            
-            # Riaddestriamo il modello al volo (il dataset è piccolo, è un'operazione istantanea)
             model.fit(np.array(X_list), np.array(y_list))
-            print(" Modello aggiornato con successo! Le probabilità si adatteranno alla prossima diagnosi.")
-
+            print(" Modello aggiornato con successo!")
 def main():
     print("=== AVVIO SISTEMA DIAGNOSTICO ICon (OntoBK) ===\n")
     
