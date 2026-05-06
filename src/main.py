@@ -138,7 +138,7 @@ def main():
     # 3. Lettura e Arricchimento Dataset
     print("\n[3/5] Lettura CSV e Semantic Feature Extraction...")
     df_raw = load_and_augment_data()
-    extractor = SemanticFeatureExtractor(reasoner)
+    extractor = SemanticFeatureExtractor(reasoner, df_raw)
     X, y = extractor.process_dataset(df_raw)
     
     # 4. Machine Learning & Valutazione (K-Fold statitistico)
