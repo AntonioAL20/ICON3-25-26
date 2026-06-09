@@ -22,8 +22,7 @@ def load_and_augment_data():
         
     df = pd.read_csv(csv_path)
     
-    # Se il dataset è piccolissimo (vecchia versione), lo moltiplichiamo.
-    # Altrimenti (nuova versione da 1000 righe), lo lasciamo così!
+    # Se le dimensioni del dataset sono ridotte, si applica la moltiplicazione delle istanze 
     if len(df) < 50:
         df = pd.concat([df]*20, ignore_index=True)
         
@@ -61,7 +60,7 @@ def interactive_diagnostic_shell(model, extractor, X_dataset, y_dataset):
     print(" (Digita 'esci' per terminare il programma)")
     print("*"*65)
     
-    # DINAMICO: Peschiamo la lista direttamente da ciò che ha letto l'estrattore!
+    # viene pescata la lista direttamente da ciò che ha letto l'estrattore!
     sintomi_validi = extractor.raw_features
     print(f"Sintomi supportati dall'Ontologia:\n{', '.join(sintomi_validi)}\n")
     
@@ -135,7 +134,7 @@ def main():
     final_model = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=42)
     final_model.fit(X, y) # Addestriamo il modello su tutto il dataset iniziale
     
-    # Lancia il loop interattivo PASSANDO X e y per poterli espandere!
+    # Lancio del loop interattivo PASSANDO X e y per poterli espandere!
     interactive_diagnostic_shell(final_model, extractor, X, y)
 
 if __name__ == "__main__":
