@@ -17,21 +17,21 @@ def generate_large_dataset(num_samples=1000):
     data = []
     
     for _ in range(num_samples):
-        # Scegliamo un guasto a caso
+        # scelta di un guasto a caso
         guasto_target = random.choice(list(guasti_rules.keys()))
         sintomi_possibili = guasti_rules[guasto_target]
         
-        # Scegliamo da 1 a 3 sintomi per questo guasto
+        # scelta da 1 a 3 sintomi per questo guasto
         num_sintomi = random.randint(1, min(3, len(sintomi_possibili)))
         sintomi_scelti = random.sample(sintomi_possibili, num_sintomi)
         
-        # Aggiungiamo un leggero "rumore" (il 10% delle volte un sintomo fuori contesto)
+        # Aggiunta un leggero "rumore" (il 10% delle volte un sintomo fuori contesto)
         if random.random() < 0.10:
             sintomo_rumore = random.choice(["VentolaRumorosa", "SchermoNero", "TicchettioEstrusore"])
             if sintomo_rumore not in sintomi_scelti:
                 sintomi_scelti.append(sintomo_rumore)
                 
-        # Uniamo i sintomi con il punto e virgola
+        # Unione dei sintomi con il punto e virgola
         sintomi_str = ";".join(sintomi_scelti)
         data.append({"sintomi": sintomi_str, "guasto": guasto_target})
         
