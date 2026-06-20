@@ -5,7 +5,6 @@ import warnings
 from sklearn.model_selection import RepeatedKFold, cross_validate
 from sklearn.preprocessing import StandardScaler
 
-# IMPORT DEI 3 ALGORITMI
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.svm import SVC
 from sklearn.neural_network import MLPClassifier
@@ -29,10 +28,8 @@ def load_and_augment_data():
     return df.sample(frac=1, random_state=42).reset_index(drop=True)
 
 def evaluate_ml_model(X, y):
-    """Valutazione rigorosa con K-Fold comparando 3 architetture ML."""
     print("\n[Valutazione] Avvio Repeated K-Fold Cross Validation (5 Fold, 5 Ripetizioni)...")
     
-    # Standardizzazione obbligatoria per SVM e Reti Neurali
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
     
@@ -62,31 +59,37 @@ def evaluate_ml_model(X, y):
 def interactive_diagnostic_shell(model, scaler, extractor, X_dataset, y_dataset):
     print("\n" + "*"*75)
     print(" MODALITA' DIAGNOSTICA AVANZATA E APPRENDIMENTO ONLINE")
-    print(" (Digita 'esci' alla richiesta del materiale per terminare)")
+    print(" (Digita 'esci', 'exit' o 'quit' alla richiesta del materiale per terminare)")
     print("*"*75)
     
-    print(f"Materiali supportati: {', '.join(extractor.materiali_features)}")
-    print(f"Sintomi ontologici supportati: {', '.join(extractor.raw_features)}\n")
+    print(f"Sintomi ontologici supportati:\n {', '.join(extractor.raw_features)}\n")
     
     X_list = X_dataset.tolist()
     y_list = y_dataset.tolist()
     
     while True:
         try:
-            mat = input("Inserisci Materiale (PLA, ABS, PETG...): ").strip()
-            if mat.lower() in ['esci', 'q']: break
+            # Lista materiali stampata in modo chiaro ed esplicito dentro l'input
+            mat_prompt = f"\nInserisci Materiale [{', '.join(extractor.materiali_features)}]: "
+            mat = input(mat_prompt).strip()
             
+            # RISOLTO IL BUG SULL'USCITA DEL PROGRAMMA
+            if mat.lower() in ['esci', 'exit', 'quit', 'q']: 
+                print("Chiusura del sistema diagnostico. Arrivederci!")
+                break
+                
             t_est = float(input("Temperatura Estrusore (°C): ").strip())
             t_bed = float(input("Temperatura Piatto (°C): ").strip())
-            ore = float(input("Ore di stampa al momento del guasto: ").strip())
+            v_stampa = float(input("Velocità di stampa (mm/s): ").strip())
+            umid = float(input("Umidità ambientale (%): ").strip())
+            usura = float(input("Ore totali di utilizzo hardware (Usura): ").strip())
+            ore = float(input("Ore di durata della stampa corrente: ").strip())
             
             sint = input("Inserisci i sintomi testuali (separati da virgola): ").strip()
             symptoms = [s.strip() for s in sint.split(',')] if sint else []
             
-            # Creazione vettore
-            raw_features = extractor.extract_features(t_est, t_bed, ore, mat.upper(), symptoms)
+            raw_features = extractor.extract_features(t_est, t_bed, ore, v_stampa, umid, usura, mat.upper(), symptoms)
             
-            # Lo scaler necessita di un array 2D
             scaled_features = scaler.transform([raw_features])
             
             prediction = model.predict(scaled_features)[0]
@@ -102,13 +105,12 @@ def interactive_diagnostic_shell(model, scaler, extractor, X_dataset, y_dataset)
             if feedback:
                 X_list.append(raw_features)
                 y_list.append(feedback)
-                # Ri-addestriamo aggiornando prima lo scaler con i nuovi dati
                 X_new_scaled = scaler.fit_transform(np.array(X_list))
                 model.fit(X_new_scaled, np.array(y_list))
                 print(" Rete Neurale aggiornata con successo!")
                 
         except ValueError:
-            print("[!] Errore di inserimento. Assicurati di inserire numeri per le temperature e le ore.\n")
+            print("[!] Errore di inserimento. Assicurati di inserire i valori numerici correttamente.\n")
 
 def main():
     print("=== AVVIO SISTEMA DIAGNOSTICO MULTIMODALE ICon ===\n")
@@ -122,7 +124,7 @@ def main():
     reasoner = DiagnosticReasoner(onto)
     reasoner.run_inference()
     
-    print("\n[3/5] Lettura CSV e Generazione Vettoriale (Sensori + OntoBK)...")
+    print("\n[3/5] Lettura CSV e Generazione Vettoriale Estesa...")
     df_raw = load_and_augment_data()
     extractor = SemanticFeatureExtractor(reasoner, df_raw)
     X, y = extractor.process_dataset(df_raw)
@@ -130,11 +132,10 @@ def main():
     print("\n[4/5] Esecuzione Comparativa Architetture ML...")
     evaluate_ml_model(X, y)
     
-    print("\n[5/5] Addestramento modello di punta (Rete Neurale) per la Shell...")
+    print("\n[5/5] Addestramento Rete Neurale e avvio Shell...")
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
     
-    # Scegliamo la rete neurale come modello finale per l'interfaccia interattiva
     final_model = MLPClassifier(hidden_layer_sizes=(50, 25), max_iter=300, random_state=42)
     final_model.fit(X_scaled, y) 
     
