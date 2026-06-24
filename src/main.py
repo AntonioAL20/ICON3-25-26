@@ -80,12 +80,13 @@ def interactive_diagnostic_shell(model, scaler, extractor, X_dataset, y_dataset)
             v_stampa = float(input("Velocità di stampa (mm/s): ").strip())
             umid = float(input("Umidità ambientale (%): ").strip())
             usura = float(input("Ore totali di utilizzo hardware (Usura): ").strip())
+            vibrazioni = float(input("Livello Vibrazioni asse X (Hz): ").strip())
             ore = float(input("Ore di durata della stampa corrente: ").strip())
             
             sint = input("Inserisci i sintomi testuali (separati da virgola): ").strip()
             symptoms = [s.strip() for s in sint.split(',')] if sint else []
             
-            raw_features = extractor.extract_features(t_est, t_bed, ore, v_stampa, umid, usura, mat.upper(), symptoms)
+            raw_features = extractor.extract_features(t_est, t_bed, ore, v_stampa, umid, usura, vibrazioni, mat.upper(), symptoms)
             scaled_features = scaler.transform([raw_features])
             
             prediction = model.predict(scaled_features)[0]
