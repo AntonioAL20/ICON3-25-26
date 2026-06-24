@@ -17,8 +17,9 @@ def build_advanced_ontology():
         class Sintomo(EntitaDiagnostica): pass
         class StatoOperativo(Thing): pass
         class CategoriaDegrado(Thing): pass
+        class TipoCalibrazione(Thing): pass
 
-        # --- TASSONOMIA STATO OPERATIVO E PROFILI DI DEGRADO ---
+        # --- TASSONOMIA CONTESTO E DEGRADO ---
         class AmbienteUmido(StatoOperativo): pass
         class AltaVelocita(StatoOperativo): pass
         class UsuraAvanzata(StatoOperativo): pass
@@ -26,7 +27,27 @@ def build_advanced_ontology():
         class DegradoMeccanico(CategoriaDegrado): pass
         class DegradoTermico(CategoriaDegrado): pass
 
-        # --- OBJECT PROPERTIES (LE 5 RELAZIONI DI PROGETTO) ---
+        class CalibrazionePID(TipoCalibrazione): pass
+        class CalibrazioneStep(TipoCalibrazione): pass
+
+        # --- TASSONOMIA COMPONENTI HARDWARE ---
+        class ComponenteElettrico(Componente): pass
+        class ComponenteMeccanico(Componente): pass
+        class ComponenteTermico(Componente): pass
+        class StrutturaMeccanica(ComponenteMeccanico): pass
+        class Sensore(ComponenteElettrico): pass
+
+        class MotoreStepper(ComponenteMeccanico, ComponenteElettrico): pass
+        class Termistore(ComponenteTermico, Sensore): pass
+        class Ugello(ComponenteMeccanico, ComponenteTermico): pass
+        class PiattoRiscaldato(ComponenteTermico, ComponenteElettrico): pass
+        class SchedaMadre(ComponenteElettrico): pass
+        class Finecorsa(ComponenteElettrico, ComponenteMeccanico): pass
+        class Ventola(ComponenteElettrico, ComponenteMeccanico): pass
+        class Cinghia(ComponenteMeccanico): pass
+        class Accelerometro(Sensore): pass
+
+        # --- OBJECT PROPERTIES ---
         class ha_sottocomponente(ObjectProperty, TransitiveProperty):
             domain = [Componente]; range = [Componente]
         
@@ -37,53 +58,41 @@ def build_advanced_ontology():
         class coinvolge_componente(ObjectProperty):
             domain = [Sintomo]; range = [Componente]
 
-        # 1. sensibile_a: Relazione tra entità e stati ambientali critici
         class sensibile_a(ObjectProperty):
             domain = [EntitaDiagnostica]; range = [StatoOperativo]
 
-        # 2. aggravato_da: Relazione tra manifestazioni di guasto e dinamiche operative
         class aggravato_da(ObjectProperty):
             domain = [Sintomo]; range = [StatoOperativo]
 
-        # 3. alimentato_da: Relazione di dipendenza energetico-funzionale meccatronica
         class alimentato_da(ObjectProperty):
             domain = [Componente]; range = [Componente]
 
-        # 4. conseguenza_di: Catena causale tra sintomi (Proprietà Transitiva)
         class conseguenza_di(ObjectProperty, TransitiveProperty):
             domain = [Sintomo]; range = [Sintomo]
 
-        # 5. soggetto_a_degrado: Mappatura della vulnerabilità fisica dell'hardware
         class soggetto_a_degrado(ObjectProperty):
             domain = [Componente]; range = [CategoriaDegrado]
 
-        # --- TASSONOMIA HARDWARE COMPONENTI ---
-        class ComponenteElettrico(Componente): pass
-        class ComponenteMeccanico(Componente): pass
-        class ComponenteTermico(Componente): pass
-        class StrutturaMeccanica(ComponenteMeccanico): pass
+        class misurato_da(ObjectProperty):
+            domain = [Sintomo]; range = [Sensore]
 
-        class MotoreStepper(ComponenteMeccanico, ComponenteElettrico): pass
-        class Termistore(ComponenteTermico, ComponenteElettrico): pass
-        class Ugello(ComponenteMeccanico, ComponenteTermico): pass
-        class PiattoRiscaldato(ComponenteTermico, ComponenteElettrico): pass
-        class SchedaMadre(ComponenteElettrico): pass
-        class Finecorsa(ComponenteElettrico, ComponenteMeccanico): pass
-        class Ventola(ComponenteElettrico, ComponenteMeccanico): pass
-        class Cinghia(ComponenteMeccanico): pass
+        class richiede_calibrazione(ObjectProperty):
+            domain = [Componente]; range = [TipoCalibrazione]
 
-        # --- ISTANZE DI CONTESTO (ABox - Ambienti e Profili) ---
+        # --- ISTANZE DI CONTESTO (ABox) ---
         config_umido = AmbienteUmido("ContestoAmbienteUmido")
         config_veloce = AltaVelocita("ContestoAltaVelocita")
         config_usura = UsuraAvanzata("ContestoUsuraAvanzata")
 
         degrado_mecc = DegradoMeccanico("ProfiloDegradoMeccanico")
         degrado_term = DegradoTermico("ProfiloDegradoTermico")
+        
+        cal_pid = CalibrazionePID("RoutinePID_Termica")
+        cal_step = CalibrazioneStep("RoutineStep_Meccanica")
 
-        # --- ISTANZE HARDWARE (ABox - Topologia) ---
+        # --- ISTANZE HARDWARE E TOPOLOGIA (ABox) ---
         extruder_asm = ComponenteMeccanico("GruppoEstrusore")
         asse_x = StrutturaMeccanica("AsseX")
-        asse_y = StrutturaMeccanica("AsseY")
         
         mainboard = SchedaMadre("SchedaMadrePrincipale")
         piatto = PiattoRiscaldato("PiattoDiStampa")
@@ -92,28 +101,33 @@ def build_advanced_ontology():
         motore_x = MotoreStepper("MotoreX", parte_di=[asse_x])
         cinghia_x = Cinghia("CinghiaX", parte_di=[asse_x])
         endstop_x = Finecorsa("FinecorsaX", parte_di=[asse_x])
+        sensore_vib = Accelerometro("AccelerometroAsseX", parte_di=[asse_x])
         
         ugello_1 = Ugello("UgelloPrincipale", parte_di=[extruder_asm])
         termistore_hotend = Termistore("TermistoreHotend", parte_di=[extruder_asm])
         ventola_hotend = Ventola("VentolaHotend", parte_di=[extruder_asm])
 
-        # --- VALORIZZAZIONE ASSERZIONI SULLE NUOVE PROPRIETA' ---
-        # 3. Modellazione albero elettrico (Alimentazione Hardware)
+        # --- ASSERZIONI LOGICHE (RETE ELETTRICA, DEGRADO E CALIBRAZIONI) ---
         motore_e.alimentato_da = [mainboard]
         motore_x.alimentato_da = [mainboard]
         piatto.alimentato_da = [mainboard]
         termistore_hotend.alimentato_da = [mainboard]
         ventola_hotend.alimentato_da = [mainboard]
         endstop_x.alimentato_da = [mainboard]
+        sensore_vib.alimentato_da = [mainboard]
 
-        # 5. Mappatura del ciclo di vita fisico (Degrado)
         cinghia_x.soggetto_a_degrado = [degrado_mecc]
         motore_x.soggetto_a_degrado = [degrado_mecc]
         motore_e.soggetto_a_degrado = [degrado_mecc]
         termistore_hotend.soggetto_a_degrado = [degrado_term]
         ugello_1.soggetto_a_degrado = [degrado_term]
 
-        # --- RESTRIZIONI LOGICHE AVANZATE (Description Logic) ---
+        termistore_hotend.richiede_calibrazione = [cal_pid]
+        piatto.richiede_calibrazione = [cal_pid]
+        motore_x.richiede_calibrazione = [cal_step]
+        motore_e.richiede_calibrazione = [cal_step]
+
+        # --- RESTRIZIONI LOGICHE AVANZATE ---
         class AllarmeTermico(Sintomo):
             equivalent_to = [Sintomo & coinvolge_componente.some(ComponenteTermico)]
         
@@ -123,15 +137,14 @@ def build_advanced_ontology():
         class AllarmeElettrico(Sintomo):
             equivalent_to = [Sintomo & coinvolge_componente.some(ComponenteElettrico)]
 
-        # Nuove restrizioni deduttive abilitate dalle nuove Object Properties
         class AllarmeAdesioneIgroscopica(Sintomo):
             equivalent_to = [Sintomo & aggravato_da.some(AmbienteUmido)]
 
         class AllarmeCriticoUsura(Sintomo):
             equivalent_to = [Sintomo & aggravato_da.some(UsuraAvanzata)]
 
-        # --- POPOLAMENTO SINTOMI ED ASSERZIONI CONTESTUALI CAUSALI ---
-        s_alta_temp = Sintomo("TempTroppoAlta", coinvolge_componente=[termistore_hotend])
+        # --- POPOLAMENTO SINTOMI ---
+        s_alta_temp = Sintomo("TempTroppoAlta", coinvolge_componente=[termistore_hotend], misurato_da=[termistore_hotend])
         s_inst_temp = Sintomo("TempInstabile", coinvolge_componente=[termistore_hotend], aggravato_da=[config_usura])
         s_piatto_fr = Sintomo("PiattoFreddo", coinvolge_componente=[piatto])
         
@@ -139,8 +152,8 @@ def build_advanced_ontology():
         s_no_filam = Sintomo("FilamentoNonEsce", coinvolge_componente=[ugello_1])
         s_sotto_est = Sintomo("SottoEstrusione", coinvolge_componente=[extruder_asm])
         
-        s_layer_sp = Sintomo("LayerSpostati", coinvolge_componente=[motore_x, cinghia_x], aggravato_da=[config_veloce, config_usura])
-        s_rum_cingh = Sintomo("RumoreCinghia", coinvolge_componente=[cinghia_x], aggravato_da=[config_usura])
+        s_layer_sp = Sintomo("LayerSpostati", coinvolge_componente=[motore_x, cinghia_x], aggravato_da=[config_veloce, config_usura], misurato_da=[sensore_vib])
+        s_rum_cingh = Sintomo("RumoreCinghia", coinvolge_componente=[cinghia_x], aggravato_da=[config_usura], misurato_da=[sensore_vib])
         s_home_fall = Sintomo("HomeFallito", coinvolge_componente=[endstop_x, motore_x])
         
         s_bruciato = Sintomo("OdoreBruciato", coinvolge_componente=[mainboard])
@@ -149,10 +162,8 @@ def build_advanced_ontology():
         
         s_warping = Sintomo("Warping", coinvolge_componente=[piatto], aggravato_da=[config_umido])
 
-        # 4. Modellazione Catena di Conseguenze (Root Cause Analysis - Transitività)
-        s_ticchettio.conseguenza_di = [s_no_filam]  # Il ticchettio è conseguenza dell'ugello ostruito
-        s_sotto_est.conseguenza_di = [s_ticchettio]  # La sotto-estrusione è conseguenza del ticchettio del motore
-        # Grazie alla transitività di conseguenza_di, HermiT dedurrà autonomamente che 
-        # SottoEstrusione è conseguenza_di FilamentoNonEsce.
+        # Catena Causale
+        s_ticchettio.conseguenza_di = [s_no_filam] 
+        s_sotto_est.conseguenza_di = [s_ticchettio] 
 
     return onto, onto_path

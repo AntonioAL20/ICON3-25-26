@@ -25,7 +25,7 @@ class DiagnosticReasoner:
             return []
 
         inferred = [cls.name for cls in istanza_sintomo.INDIRECT_is_a 
-                    if hasattr(cls, 'name') and cls.name not in ["Thing", "Sintomo", "EntitaDiagnostica", "StatoOperativo", "CategoriaDegrado"]]
+                    if hasattr(cls, 'name') and cls.name not in ["Thing", "Sintomo", "EntitaDiagnostica", "StatoOperativo", "CategoriaDegrado", "TipoCalibrazione"]]
         
         self.cache_inferenze[symptom_name] = inferred
         return inferred
